@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  repository_dispatch:
+    types: [run-tests]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout tests repository
+        uses: actions/checkout@v2
+        with:
+          submodules: false
+
+      - name: Update submodule to specific branch or commit
+        run: |
+          git submodule update --init --recursive
+          cd 2024_C_AV_RPI
+          git checkout ${{ github.event.client_payload.branch || github.event.client_payload.commit }}
+          cd ..
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Transfer tests and source code to remote device
+        run: |
+          scp -r -P ${{ secrets.SECRET_PORT }} . ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }}:/home/${{ secrets.SECRET_USER }}/tests
+
+      - name: Compile and test on remote device
+        run: |
+          ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
+          cd ./tests/C_AV_SIL
+
+      - name: Trigger source repository workflow
+        if: always()
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: your-username/source-repo
+          event-type: tests-completed
+          client-payload: |
+            {
+              "status": "${{ job.status }}"
+            }
+          
+          
+
