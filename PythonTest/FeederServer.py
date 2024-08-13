@@ -4,7 +4,7 @@ import pandas as pd
 import time
 import sys
 
-df = pd.read_csv('./Test_AVTrainingData.csv')
+df = pd.read_csv('plots/Test_AVTrainingData.csv')
 
 
 def find_closest_row(df, arbitrary_timestamp):

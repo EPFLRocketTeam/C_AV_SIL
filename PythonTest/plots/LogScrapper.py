@@ -129,8 +129,8 @@ def plot_var(variables):
 
     # plt.show()
     # save in folder -> "plots" with the name of the file being the name of the variables
-    if not os.path.exists('plots'):
-        os.makedirs('plots')
+    if not os.path.exists(''):
+        os.makedirs('')
     print(f"Saving plot as {variables}.png")
     plt.savefig(f'plots/{variables}.png')
 
