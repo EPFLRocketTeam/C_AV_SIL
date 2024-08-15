@@ -25,6 +25,7 @@ jobs:
       - name: Compile and test on remote device
         run: |
           mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_IP }}
           ssh-keyscan -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_IP }} >> ~/.ssh/known_hosts
           
           ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
