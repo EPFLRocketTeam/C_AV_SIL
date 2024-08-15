@@ -22,9 +22,11 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
 
-
       - name: Compile and test on remote device
         run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_IP }} >> ~/.ssh/known_hosts
+          
           ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
 
       - name: Checkout tests repository
