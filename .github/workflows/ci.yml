@@ -30,7 +30,13 @@ jobs:
         run: |
           git submodule update --init --recursive
           cd 2024_C_AV_RPI
-          git checkout ${{ github.event.client_payload.branch || github.event.client_payload.commit }}
+          if [ -n "${{ github.event.client_payload.branch }}" ]; then
+            git checkout ${{ github.event.client_payload.branch }}
+          elif [ -n "${{ github.event.client_payload.commit }}" ]; then
+            git checkout ${{ github.event.client_payload.commit }}
+          else
+          git checkout main
+          fi
           cd ..
 
       - name: Set up SSH
