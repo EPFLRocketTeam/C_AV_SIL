@@ -15,17 +15,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Checkout tests repository
         uses: actions/checkout@v2
 
-      - name: Set up SSH agent for cloning
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_CLONE_TOKEN }}
-      - name: Add GitHub to known hosts
+      - name: Compile and test on remote device
         run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
+
+
       - name: Update submodules
         run: |
           git submodule update --init --recursive
@@ -38,19 +41,7 @@ jobs:
           git checkout main
           fi
           cd ..
-
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Transfer tests and source code to remote device
-        run: |
-          scp -r -P ${{ secrets.SECRET_PORT }} . ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }}:/home/${{ secrets.SECRET_USER }}/tests
-
-      - name: Compile and test on remote device
-        run: |
-          ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
+          
           cd ./tests/C_AV_SIL
           
 
