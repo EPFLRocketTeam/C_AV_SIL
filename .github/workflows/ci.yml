@@ -17,10 +17,16 @@ jobs:
     steps:
       - name: Checkout tests repository
         uses: actions/checkout@v2
-        with:
-          submodules: false
 
-      - name: Update submodule to specific branch or commit
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_CLONE_TOKEN }}
+      - name: Add GitHub to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - name: Update submodules
         run: |
           git submodule update --init --recursive
           cd 2024_C_AV_RPI
