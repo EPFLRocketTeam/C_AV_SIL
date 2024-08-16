@@ -16,19 +16,16 @@ jobs:
 
     steps:
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
 
       - name: Compile and test on remote device
+        env:
+          SSH_PASS: ${{ secrets.SSH_PASS }}
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_IP }}
-          ssh-keyscan -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p "$SSH_PASS" -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_IP }} >> ~/.ssh/known_hosts
           
-          ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
+          sshpass -p ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
 
       - name: Checkout tests repository
         uses: actions/checkout@v2
