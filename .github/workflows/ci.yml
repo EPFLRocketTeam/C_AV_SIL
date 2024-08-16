@@ -22,8 +22,6 @@ jobs:
         env:
           SSH_PASS: ${{ secrets.SSH_PASS }}
         run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_IP }} >> ~/.ssh/known_hosts
           
           sshpass -p "$SSH_PASS" ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
 
