@@ -19,7 +19,7 @@ jobs:
         env:
           SSH_PASS: ${{ secrets.SSH_PASS }}
         run: |
-          sshpass -p "$SSH_PASS" ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
+          sshpass -p "$SSH_PASS" ssh -T -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
 
       - name: Checkout tests repository
         uses: actions/checkout@v2
