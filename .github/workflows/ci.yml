@@ -15,14 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-
-
       - name: Compile and test on remote device
         env:
           SSH_PASS: ${{ secrets.SSH_PASS }}
         run: |
-          
           sshpass -p "$SSH_PASS" ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
 
       - name: Checkout tests repository
