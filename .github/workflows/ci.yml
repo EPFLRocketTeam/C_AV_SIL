@@ -23,9 +23,9 @@ jobs:
           SSH_PASS: ${{ secrets.SSH_PASS }}
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p "$SSH_PASS" -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_IP }} >> ~/.ssh/known_hosts
           
-          sshpass -p ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
+          sshpass -p "$SSH_PASS" ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
 
       - name: Checkout tests repository
         uses: actions/checkout@v2
