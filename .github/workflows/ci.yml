@@ -25,7 +25,8 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: ${{ secrets.SECRET_PORT }}
           script: |
-            cd /testDir
+            ls
+            cd ./testDir
             git clone git@github.com:EPFLRocketTeam/C_AV_SIL.git
             cd C_AV_SIL
             git checkout ${{ github.head_ref }}
