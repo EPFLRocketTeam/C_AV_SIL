@@ -30,6 +30,14 @@ jobs:
             git clone git@github.com:EPFLRocketTeam/C_AV_SIL.git
             cd C_AV_SIL
             git checkout ${{ github.head_ref }}
+            if [ -n "${{ github.event.client_payload.branch }}" ]; then
+              cd 2024_C_AV_RPI
+              git checkout ${{ github.event.client_payload.branch }}
+            fi
+            cd 2024_C_AV_RPI
+            
+            git checkout reorga
+            cd ..
             mkdir build
             cd build
             cmake ..

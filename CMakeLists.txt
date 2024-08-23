@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 # Set the output directory for the build
-add_executable(main_stubs 2024_C_AV_RPI/main.cpp)
+#add_executable(main_stubs 2024_C_AV_RPI/main.cpp)
 
+add_subdirectory(2024_C_AV_RPI)
 
