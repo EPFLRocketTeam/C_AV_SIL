@@ -7,8 +7,10 @@ on:
     branches:
       - main
   pull_request:
-    branches:
-      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   build:
@@ -16,27 +18,14 @@ jobs:
 
     steps:
       - name: Compile and test on remote device
-        env:
-          SSH_PASS: ${{ secrets.SSH_PASS }}
-        run: |
-          sshpass -p "$SSH_PASS" ssh -T -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER}}@${{ secrets.SECRET_IP }} << 'EOF'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SECRET_IP }}
+          username: ${{ secrets.SECRET_USER}}
+          password: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SECRET_PORT }}
+          script: whoami
 
-      - name: Checkout tests repository
-        uses: actions/checkout@v2
-      - name: Update submodules
-        run: |
-          git submodule update --init --recursive
-          cd 2024_C_AV_RPI
-          if [ -n "${{ github.event.client_payload.branch }}" ]; then
-            git checkout ${{ github.event.client_payload.branch }}
-          elif [ -n "${{ github.event.client_payload.commit }}" ]; then
-            git checkout ${{ github.event.client_payload.commit }}
-          else
-          git checkout main
-          fi
-          cd ..
-          
-          cd ./tests/C_AV_SIL
           
 
       - name: Trigger source repository workflow
