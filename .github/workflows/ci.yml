@@ -25,15 +25,26 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: ${{ secrets.SECRET_PORT }}
           script: |
+            # Initialize a variable to indicate if any command failed
+            failed=false
             ls
             cd ./testDir
             git clone git@github.com:EPFLRocketTeam/C_AV_SIL.git
+             if [ $? -ne 0 ]; then
+              failed=true
+            fi
             cd C_AV_SIL
             git checkout ${{ github.head_ref }}
+             if [ $? -ne 0 ]; then
+              failed=true
+            fi
             git submodule update --init --recursive
             if [ -n "${{ github.event.client_payload.branch }}" ]; then
               cd 2024_C_AV_RPI
               git checkout ${{ github.event.client_payload.branch }}
+             if [ $? -ne 0 ]; then
+              failed=true
+            fi
             fi
             cd 2024_C_AV_RPI
             
@@ -43,8 +54,16 @@ jobs:
             cd build
             cmake ..
             make
+             if [ $? -ne 0 ]; then
+              failed=true
+            fi
             cd ../..
             rm -rf C_AV_SIL
+            if [ "$failed" = true ]; then
+              status="failure"
+            else
+              status="success"
+            fi
             
             
 
@@ -53,11 +72,11 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: your-username/source-repo
+          repository: EPFLRocketTeam/2024_C_AV_RPI
           event-type: tests-completed
           client-payload: |
             {
-              "status": "${{ job.status }}"
+              "status": "${{ env.status }}"
             }
           
           
