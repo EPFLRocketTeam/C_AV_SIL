@@ -44,7 +44,13 @@ jobs:
              if [ $? -ne 0 ]; then
               failed=true
             fi
+            else 
+            git checkout ${{ github.head_ref }}
+             if [ $? -ne 0 ]; then
+              failed=true
             fi
+            fi
+            
             git submodule set-branch --branch reorga ./2024_C_AV_RPI/
       
             mkdir build
