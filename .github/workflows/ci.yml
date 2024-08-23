@@ -46,7 +46,7 @@ jobs:
             fi
             fi
             git submodule set-branch --branch reorga ./2024_C_AV_RPI/
-            cd ..
+      
             mkdir build
             cd build
             cmake ..
