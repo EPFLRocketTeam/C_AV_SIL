@@ -103,9 +103,24 @@ jobs:
           port: ${{ secrets.SECRET_PORT }}
           script: |
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
-            sudo ./BMP390_test 
-      
+            sudo ./BMP390_test
+      - name: Analyse coverage and clean repo
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SECRET_IP }}
+          username: ${{ secrets.SECRET_USER}}
+          password: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SECRET_PORT }}
+          script: |
+            cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
+            find . -name "*.gcda" -exec gcov {} \;
+            cd ../../..
             
+            
+            
+      
+      
+      
 
       - name: Trigger source repository workflow
         if: always()
