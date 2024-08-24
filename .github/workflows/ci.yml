@@ -61,13 +61,49 @@ jobs:
               failed=true
             fi
             cd ../..
-            rm -rf C_AV_SIL
+
             if [ "$failed" = true ]; then
               status="failure"
             else
               status="success"
             fi
             
+  
+
+      - name: Bmp test
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SECRET_IP }}
+          username: ${{ secrets.SECRET_USER}}
+          password: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SECRET_PORT }}
+          script: |
+            cd ./testDir/C_AV_SIL/build/tests
+            sudo ./BMP390_test 
+            
+
+      - name: gps test
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SECRET_IP }}
+          username: ${{ secrets.SECRET_USER}}
+          password: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SECRET_PORT }}
+          script: |
+            cd ./testDir/C_AV_SIL/build/tests
+            sudo ./BMP390_test 
+
+      - name: LoRa test
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SECRET_IP }}
+          username: ${{ secrets.SECRET_USER}}
+          password: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SECRET_PORT }}
+          script: |
+            cd ./testDir/C_AV_SIL/build/tests
+            sudo ./BMP390_test 
+      
             
 
       - name: Trigger source repository workflow
