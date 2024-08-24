@@ -113,7 +113,7 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: EPFLRocketTeam/2024_C_AV_RPI
-          event-type: tests-completed
+          event-type: completed
           client-payload: |
             {
               "status": "${{ env.status }}"
