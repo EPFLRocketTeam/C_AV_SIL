@@ -78,7 +78,8 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: ${{ secrets.SECRET_PORT }}
           script: |
-            cd ./testDir/C_AV_SIL/build/tests
+            cd ./testDir/C_AV_SIL/build
+            ls
             sudo ./BMP390_test 
             
 
@@ -90,7 +91,7 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: ${{ secrets.SECRET_PORT }}
           script: |
-            cd ./testDir/C_AV_SIL/build/tests
+            cd ./testDir/C_AV_SIL/build
             sudo ./BMP390_test 
 
       - name: LoRa test
@@ -101,7 +102,7 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: ${{ secrets.SECRET_PORT }}
           script: |
-            cd ./testDir/C_AV_SIL/build/tests
+            cd ./testDir/C_AV_SIL/build
             sudo ./BMP390_test 
       
             
