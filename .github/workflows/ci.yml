@@ -169,7 +169,7 @@ jobs:
           port: ${{ secrets.SECRET_PORT }}
           script: |
             cd ./testDir
-            rm -rf C_AV_SIL
+            rm -r C_AV_SIL
           
           
 
