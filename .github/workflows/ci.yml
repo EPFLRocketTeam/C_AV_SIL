@@ -145,7 +145,7 @@ jobs:
     steps:
       - name: Trigger source repository workflow
         if: always()
-        id: completed
+        id: trigger
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
