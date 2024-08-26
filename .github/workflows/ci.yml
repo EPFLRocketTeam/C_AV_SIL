@@ -12,7 +12,7 @@ on:
       - synchronize
       - reopened
 concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
+  group: ${{ github.workflow }}
   cancel-in-progress: true
 
 jobs:
@@ -141,7 +141,7 @@ jobs:
   trigger:
     needs: tests
     runs-on: ubuntu-latest
-    if: ${{ always() }}
+    if: ${{ always() && github.event_name != 'pull_request' && github.event_name != 'push'}}
     steps:
       - name: Trigger source repository workflow
         if: always()
