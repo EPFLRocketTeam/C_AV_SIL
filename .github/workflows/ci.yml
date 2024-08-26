@@ -22,8 +22,10 @@ jobs:
     - name: okok
       run: |
         echo "Hello, world!"
-        curl -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" https://api.github.com/repos/EPFLRocketTeam/2024_C_AV_RPI
-
+        curl -X POST https://api.github.com/repos/EPFLRocketTeam/2024_C_AV_RPI/dispatches \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" \
+          --data '{"event_type": "completed"}'
   build:
     runs-on: ubuntu-latest
 
