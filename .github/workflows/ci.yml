@@ -22,7 +22,7 @@ jobs:
     - name: okok
       run: |
         echo "Hello, world!"
-        curl -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" https://api.github.com/repos/EPFLRocketTeam/2024_C_AV_SIL
+        curl -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" https://api.github.com/repos/EPFLRocketTeam/2024_C_AV_RPI
 
   build:
     runs-on: ubuntu-latest
