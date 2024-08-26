@@ -30,29 +30,21 @@ jobs:
             ls
             cd ./testDir
             git clone git@github.com:EPFLRocketTeam/C_AV_SIL.git
-             if [ $? -ne 0 ]; then
-              failed=true
-            fi
             cd C_AV_SIL
             git checkout ${{ github.head_ref }}
-             if [ $? -ne 0 ]; then
-              failed=true
-            fi
             git submodule update --init --recursive --remote
             if [ -n "${{ github.event.client_payload.branch }}" ]; then
-               git submodule set-branch --branch ${{ github.event.client_payload.branch }} ./2024_C_AV_RPI/
-             if [ $? -ne 0 ]; then
-              failed=true
-            fi
+              git submodule set-branch --branch ${{ github.event.client_payload.branch }} ./2024_C_AV_RPI/
+              git checkout ${{ github.event.client_payload.branch }}
             else 
             git checkout ${{ github.head_ref }}
-             if [ $? -ne 0 ]; then
-              failed=true
-            fi
             fi
             
             git submodule set-branch --branch reorga ./2024_C_AV_RPI/
-      
+            git checkout reorga
+            cd 2024_C_AV_RPI
+            git submodule update --init --recursive --remote
+            cd ..
             mkdir build
             cd build
             cmake ..
@@ -69,7 +61,10 @@ jobs:
             fi
             
   
-
+  tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Bmp test
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -80,8 +75,9 @@ jobs:
           script: |
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
             ls
-            sudo ./BMP390_test 
+            sudo ./BMP390_test || exit 1
             
+
 
       - name: gps test
         uses: appleboy/ssh-action@v1.0.3
@@ -92,7 +88,7 @@ jobs:
           port: ${{ secrets.SECRET_PORT }}
           script: |
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
-            sudo ./BMP390_test 
+            sudo ./BMP390_test || exit 1
 
       - name: LoRa test
         uses: appleboy/ssh-action@v1.0.3
@@ -103,8 +99,25 @@ jobs:
           port: ${{ secrets.SECRET_PORT }}
           script: |
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
-            sudo ./BMP390_test
-      - name: Analyse coverage and clean repo
+            sudo ./BMP390_test || exit 1
+
+      - name: ADXL test
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SECRET_IP }}
+          username: ${{ secrets.SECRET_USER}}
+          password: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SECRET_PORT }}
+          script: |
+            cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
+            sudo ./ADXL375_test || exit 1
+
+
+  coverage:
+    needs: test4
+    runs-on: ubuntu-latest
+    steps:
+      - name: Analyse coverage
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SECRET_IP }}
@@ -114,12 +127,20 @@ jobs:
           script: |
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
             find . -name "*.gcda" -exec gcov {} \;
-            cd ../../..
             
             
             
-      
-      
+
+      - name: Clean repo
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SECRET_IP }}
+          username: ${{ secrets.SECRET_USER}}
+          password: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SECRET_PORT }}
+          script: |
+            cd ./testDir
+            rm -rf C_AV_SIL
       
 
       - name: Trigger source repository workflow
@@ -131,7 +152,7 @@ jobs:
           event-type: completed
           client-payload: |
             {
-              "status": "${{ env.status }}"
+              "status": "${{ job.status }}"
             }
           
           
