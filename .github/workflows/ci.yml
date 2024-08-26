@@ -11,6 +11,9 @@ on:
       - opened
       - synchronize
       - reopened
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -100,6 +103,8 @@ jobs:
           script: |
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
             sudo ./BMP390_test || exit 1
+            
+      
 
       - name: ADXL test
         uses: appleboy/ssh-action@v1.0.3
