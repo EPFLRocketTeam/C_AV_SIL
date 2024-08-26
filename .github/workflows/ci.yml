@@ -114,7 +114,8 @@ jobs:
 
 
   coverage:
-    needs: test4
+    needs: tests
+    if: ${{ success() }}
     runs-on: ubuntu-latest
     steps:
       - name: Analyse coverage
@@ -131,18 +132,12 @@ jobs:
             
             
 
-      - name: Clean repo
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SECRET_IP }}
-          username: ${{ secrets.SECRET_USER}}
-          password: ${{ secrets.SSH_PASS }}
-          port: ${{ secrets.SECRET_PORT }}
-          script: |
-            cd ./testDir
-            rm -rf C_AV_SIL
       
-
+  trigger:
+    needs: tests
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    steps:
       - name: Trigger source repository workflow
         if: always()
         uses: peter-evans/repository-dispatch@v1
@@ -154,6 +149,22 @@ jobs:
             {
               "status": "${{ job.status }}"
             }
+
+  clean:
+    needs: coverage
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean repo
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SECRET_IP }}
+          username: ${{ secrets.SECRET_USER}}
+          password: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SECRET_PORT }}
+          script: |
+            cd ./testDir
+            rm -rf C_AV_SIL
           
           
 
