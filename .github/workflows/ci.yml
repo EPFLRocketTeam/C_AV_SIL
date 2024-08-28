@@ -151,6 +151,7 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: EPFLRocketTeam/2024_C_AV_RPI
           event-type: tests-completed
+          branch: ${{ github.event.client_payload.branch }}
           client-payload: |
             {
               "status": "${{ job.status }}"
