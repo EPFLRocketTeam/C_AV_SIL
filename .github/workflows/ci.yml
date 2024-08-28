@@ -19,7 +19,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+
+
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       - name: Compile and test on remote device
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -133,32 +140,12 @@ jobs:
           script: |
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
             find . -name "*.gcda" -exec gcov {} \;
-            
-            
-            
 
-      
-  trigger:
-    needs: tests
-    runs-on: ubuntu-latest
-    #if: ${{ always() && github.event_name != 'pull_request' && github.event_name != 'push'}}
-    steps:
-      - name: Trigger source repository workflow
-        if: always()
-        id: trigger
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: EPFLRocketTeam/2024_C_AV_RPI
-          event-type: tests-completed
-          branch: ${{ github.event.client_payload.branch }}
-          client-payload: |
-            {
-              "status": "${{ job.status }}"
-            }
-
-      - name: echo
-        run: echo ${{ github.event.client_payload.branch }}
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            
 
   clean:
     needs: coverage
@@ -175,6 +162,8 @@ jobs:
           script: |
             cd ./testDir
             rm -r C_AV_SIL
+
+      
           
           
 
