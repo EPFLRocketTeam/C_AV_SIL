@@ -47,11 +47,11 @@ jobs:
               git submodule set-branch --branch ${{ github.event.client_payload.branch }} ./2024_C_AV_RPI/
               git checkout ${{ github.event.client_payload.branch }}
             else 
-            git checkout ${{ github.head_ref }}
-            fi
-            
             git submodule set-branch --branch reorga ./2024_C_AV_RPI/
             git checkout reorga
+            fi
+            
+
             cd 2024_C_AV_RPI
             git submodule update --init --recursive --remote
             cd ..
