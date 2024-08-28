@@ -157,6 +157,9 @@ jobs:
               "status": "${{ job.status }}"
             }
 
+      - name: echo
+        run: echo ${{ github.event.client_payload.branch }}
+
   clean:
     needs: coverage
     if: ${{ always() }}
