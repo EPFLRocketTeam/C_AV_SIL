@@ -143,10 +143,10 @@ jobs:
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
             find . -name "*.gcda" -exec gcov {} \;
 
-      #- name: SonarCloud Scan
-      #  uses: SonarSource/sonarcloud-github-action@master
-      #  env:
-      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             
 
   clean:
