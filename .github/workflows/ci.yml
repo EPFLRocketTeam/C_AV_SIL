@@ -145,6 +145,10 @@ jobs:
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=EPFLRocketTeam_C_AV_SIL
+            -Dsonar.organization=epflrocketteam-1
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             
