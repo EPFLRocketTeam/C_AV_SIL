@@ -47,8 +47,8 @@ jobs:
               git submodule set-branch --branch ${{ github.event.client_payload.branch }} ./2024_C_AV_RPI/
               git checkout ${{ github.event.client_payload.branch }}
             else 
-            git submodule set-branch --branch reorga ./2024_C_AV_RPI/
-            git checkout reorga
+            git submodule set-branch --branch main ./2024_C_AV_RPI/
+            git checkout main
             fi
             
 
