@@ -1,7 +1,7 @@
 #New CMake build file for FireHorn
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 cmake_minimum_required(VERSION 3.22.1)
-
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+## sometinh fishy here
 project(SIL VERSION 0.1 LANGUAGES C CXX)
 
 # Set the build type to Debug

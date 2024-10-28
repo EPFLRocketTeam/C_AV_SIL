@@ -45,7 +45,6 @@ jobs:
               git checkout ${{ github.event.client_payload.branch }}
             else 
             git submodule set-branch --branch main ./2024_C_AV_RPI/
-            git checkout main
             fi
             
 
