@@ -158,7 +158,7 @@ jobs:
           pwd
           ls -R
           rsync -avz -e "ssh -p ${{ secrets.SECRET_PORT }}" \
-            ${{ secrets.SECRET_USER }}@${{ secrets.SECRET_IP }}:./testDir/C_AV_SIL/2024_C_AV_RPI \
+            ${{ secrets.SECRET_USER }}@${{ secrets.SECRET_IP }}:home/av/testDir/C_AV_SIL/2024_C_AV_RPI \
             ./2024_C_AV_RPI
 
 
