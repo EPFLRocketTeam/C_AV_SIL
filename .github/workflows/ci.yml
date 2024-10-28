@@ -146,9 +146,9 @@ jobs:
           script: |
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
             find . -name "*.gcda" -exec gcov {} \;
+            cd ../../
 
-      - name: Check directory structure
-        run: ls
+      
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
