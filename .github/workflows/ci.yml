@@ -159,8 +159,8 @@ jobs:
             -Dsonar.organization=epflrocketteam-1
             -Dsonar.token${{secrets.tokenMarin}}
             -Dsonar.sources=2024_C_AV_RPI/src
-            -Dsonar.tests=2024_C_AV_RPI/tests
             -Dsonar.scm.provider=git
+#            -Dsonar.tests=2024_C_AV_RPI/tests
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             
