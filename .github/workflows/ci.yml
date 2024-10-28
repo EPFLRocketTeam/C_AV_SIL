@@ -62,7 +62,11 @@ jobs:
              if [ $? -ne 0 ]; then
               failed=true
             fi
+            ## Add tests from here
+            
+            ## Add tests above
             cd ../..
+            
 
             if [ "$failed" = true ]; then
               status="failure"
