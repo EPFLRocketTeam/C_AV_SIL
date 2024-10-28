@@ -161,6 +161,9 @@ jobs:
           sshpass -p '${{ secrets.SSH_PASS }}' rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.SECRET_PORT}}" \
           ${{secrets.SECRET_USER}}@${{secrets.SECRET_IP}}:/home/${{secrets.SECRET_USER}}/testDir/C_AV_SIL/2024_C_AV_RPI/ \
           ./2024_C_AV_RPI/
+          cd ..
+          ls
+          
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
