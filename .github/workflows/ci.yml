@@ -160,6 +160,10 @@ jobs:
           ${{secrets.SECRET_USER}}@${{secrets.SECRET_IP}}:/home/${{secrets.SECRET_USER}}/testDir/C_AV_SIL/ \
           ./C_AV_SIL
           
+          cd C_AV_SIL/build
+          ls
+          pwd
+          
           
 
       - name: SonarCloud Scan
