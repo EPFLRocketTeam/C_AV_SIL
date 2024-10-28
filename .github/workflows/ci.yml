@@ -166,12 +166,8 @@ jobs:
       - name: Copy Files from Remote for SonarCloud Scan
         run: |
           # Use rsync to copy files from the remote server to the local GitHub workspace
-           scp -P ${{ secrets.SECRET_PORT }} -r ${{ secrets.SECRET_USER }}@${{ secrets.SECRET_IP }}:/home/***/testDir/C_AV_SIL/2024_C_AV_RPI ./2024_C_AV_RPI
+          scp -P ${{ secrets.SECRET_PORT }} -r ${{ secrets.SECRET_USER }}@${{ secrets.SECRET_IP }}:/home/av/testDir/C_AV_SIL/2024_C_AV_RPI ./2024_C_AV_RPI
           echo "Files copied successfully"
-         
-
-
-      
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
