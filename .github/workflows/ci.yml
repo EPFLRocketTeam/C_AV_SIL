@@ -153,7 +153,7 @@ jobs:
         run: |
           # Use rsync to copy files from the remote server to the local GitHub workspace
           rsync -avz -e "ssh -p ${{ secrets.SECRET_PORT }}" \
-            ${{ secrets.SECRET_USER }}@${{ secrets.SECRET_IP }}:/path/on/remote/2024_C_AV_RPI \
+            ${{ secrets.SECRET_USER }}@${{ secrets.SECRET_IP }}:./testDir/C_AV_SIL/2024_C_AV_RPI \
             ./2024_C_AV_RPI
 
 
