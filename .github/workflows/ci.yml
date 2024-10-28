@@ -153,6 +153,7 @@ jobs:
           args: >
             -Dsonar.projectKey=EPFLRocketTeam_C_AV_SIL
             -Dsonar.organization=epflrocketteam-1
+            -Dsonar.token${{secrets.tokenMarin}}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             
