@@ -149,6 +149,7 @@ jobs:
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
             find . -name "*.gcda" -exec gcov {} \;
             cd ../..
+            pwd
             ls
             
 
