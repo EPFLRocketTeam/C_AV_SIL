@@ -171,6 +171,8 @@ jobs:
             -Dsonar.token=${{secrets.tokenMarin}}
             -Dsonar.sources=C_AV_SIL/2024_C_AV_RPI/src
             -Dsonar.tests=C_AV_SIL/2024_C_AV_RPI/tests
+            -Dsonar.cfamily.compile-commands=C_AV_SIL/build/compile_commands.json
+
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   clean:
