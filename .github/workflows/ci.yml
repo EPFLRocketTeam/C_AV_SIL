@@ -169,7 +169,7 @@ jobs:
             -Dsonar.projectKey=EPFLRocketTeam_C_AV_SIL
             -Dsonar.projectBaseDir=/github/workspace
             -Dsonar.organization=epflrocketteam-1
-            -Dsonar.token${{secrets.tokenMarin}}
+            -Dsonar.token=${{secrets.tokenMarin}}
             -Dsonar.sources=2024_C_AV_RPI/src
             -Dsonar.scm.provider=git
             -Dsonar.tests=2024_C_AV_RPI/tests
