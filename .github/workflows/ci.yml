@@ -151,17 +151,7 @@ jobs:
             cd ../..
             pwd
             ls
-
-      - name: Verify Remote Path
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SECRET_IP }}
-          username: ${{ secrets.SECRET_USER }}
-          password: ${{ secrets.SSH_PASS }}
-          port: ${{ secrets.SECRET_PORT }}
-          script: |
-            ls -R /home/av/testDir/C_AV_SIL/2024_C_AV_RPI || echo "Directory not found!"
-            
+     
 
       - name: Copy Files from Remote for SonarCloud Scan
         run: |
