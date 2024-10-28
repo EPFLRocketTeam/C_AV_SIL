@@ -148,7 +148,7 @@ jobs:
             find . -name "*.gcda" -exec gcov {} \;
 
       - name: Check directory structure
-        run: ls -R
+        run: pwd
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
