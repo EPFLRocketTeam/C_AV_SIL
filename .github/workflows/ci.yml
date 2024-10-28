@@ -152,10 +152,14 @@ jobs:
             pwd
             ls
 
+      - name: Debug SSH Connection
+        run: |
+          ssh -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER }}@${{ secrets.SECRET_IP }} 'ls -R /home/av/testDir/C_AV_SIL/2024_C_AV_RPI'
+
       - name: Copy Files from Remote for SonarCloud Scan
         run: |
           # Use rsync to copy files from the remote server to the local GitHub workspace
-          rsync -avz -e "ssh -p ${{ secrets.SECRET_PORT }}" \
+          rsync -avz -e --progress "ssh -p ${{ secrets.SECRET_PORT }}" \
           ${{ secrets.SECRET_USER }}@${{ secrets.SECRET_IP }}:"/home/av/testDir/C_AV_SIL/2024_C_AV_RPI/" \
           ./2024_C_AV_RPI/
 
