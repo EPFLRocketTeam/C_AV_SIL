@@ -73,6 +73,8 @@ jobs:
             else
               status="success"
             fi
+
+      
             
   
   tests:
@@ -146,8 +148,14 @@ jobs:
           script: |
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
             find . -name "*.gcda" -exec gcov {} \;
-            cd ../../
-            ls -R
+
+      - name: Copy Files from Remote for SonarCloud Scan
+        run: |
+          # Use rsync to copy files from the remote server to the local GitHub workspace
+          rsync -avz -e "ssh -p ${{ secrets.SECRET_PORT }}" \
+            ${{ secrets.SECRET_USER }}@${{ secrets.SECRET_IP }}:/path/on/remote/2024_C_AV_RPI \
+            ./2024_C_AV_RPI
+
 
       
 
