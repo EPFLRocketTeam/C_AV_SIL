@@ -157,8 +157,8 @@ jobs:
         run: |
           # Use rsync to copy files from the remote server to the local GitHub workspace
           sshpass -p '${{ secrets.SSH_PASS }}' rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.SECRET_PORT}}" \
-          ${{secrets.SECRET_USER}}@${{secrets.SECRET_IP}}:/home/${{secrets.SECRET_USER}}/testDir/C_AV_SIL/2024_C_AV_RPI/ \
-          ./2024_C_AV_RPI/
+          ${{secrets.SECRET_USER}}@${{secrets.SECRET_IP}}:/home/${{secrets.SECRET_USER}}/testDir/C_AV_SIL/ \
+          ./C_AV_SIL
           
           
 
@@ -169,8 +169,8 @@ jobs:
             -Dsonar.projectKey=EPFLRocketTeam_C_AV_SIL
             -Dsonar.organization=epflrocketteam-1
             -Dsonar.token=${{secrets.tokenMarin}}
-            -Dsonar.sources=2024_C_AV_RPI/src
-            -Dsonar.tests=2024_C_AV_RPI/tests
+            -Dsonar.sources=C_AV_SIL/2024_C_AV_RPI/src
+            -Dsonar.tests=C_AV_SIL/2024_C_AV_RPI/tests
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   clean:
