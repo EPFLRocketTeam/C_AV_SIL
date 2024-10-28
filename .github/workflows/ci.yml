@@ -154,7 +154,7 @@ jobs:
 
       - name: Debug SSH Connection
         run: |
-          ssh -T -p ${{ secrets.SECRET_PORT }} ${{ secrets.SECRET_USER }}@${{ secrets.SECRET_IP }} 'ls -R /home/av/testDir/C_AV_SIL/2024_C_AV_RPI'
+          sudo apt install sshpass
 
       - name: Copy Files from Remote for SonarCloud Scan
         run: |
