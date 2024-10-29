@@ -149,7 +149,7 @@ jobs:
             find . -name "*.gcda" -exec gcov {} \;
             cd ../..
             source ~/.bashrc
-            /opt/sonar-scanner/bin/sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}}
+            /opt/sonar-scanner/bin/sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}} -Dsonar.pullrequest.key=${{ github.event.client_payload.pull_request_number }} -Dsonar.pullrequest.branch=${{ github.event.client_payload.branch }} -Dsonar.pullrequest.base=${{ github.event.client_payload.base }} -Dsonar.pullrequest.provider=github -Dsonar.pullrequest.github.repository=EPFLRocketTeam/C_AV_SIL -Dsonar.pullrequest.github.endpoint=https://api.github.com -Dsonar.pullrequest.github.token.secured=${{secrets.GITHUB_TOKEN}} -Dsonar.cfamily.build-wrapper-output=./build/2024_C_AV_RPI -Dsonar.cfamily.cache.enabled=true -Dsonar.cfamily.cache.path=/tmp/sonar-cfamily
 
           
   clean:
