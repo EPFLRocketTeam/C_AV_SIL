@@ -42,6 +42,7 @@ jobs:
             git submodule update --init --recursive --remote
             if [ -n "${{ github.event.client_payload.branch }}" ]; then
               git submodule set-branch --branch ${{ github.event.client_payload.branch }} ./2024_C_AV_RPI/
+              cd ./2024_C_AV_RPI
               git checkout ${{ github.event.client_payload.branch }}
             else 
             git submodule init
