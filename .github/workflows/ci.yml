@@ -18,9 +18,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -48,17 +45,19 @@ jobs:
               git checkout ${{ github.event.client_payload.branch }}
             else 
             git submodule set-branch --branch main ./2024_C_AV_RPI/
-            git checkout main
             fi
             
 
             cd 2024_C_AV_RPI
             git submodule update --init --recursive --remote
             cd ..
+            #TODO: check where we are building from
+            cat ./CMakeLists.txt
             mkdir build
             cd build
             cmake ..
             make
+            ls
              if [ $? -ne 0 ]; then
               failed=true
             fi
