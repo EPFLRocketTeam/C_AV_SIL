@@ -148,7 +148,8 @@ jobs:
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
             find . -name "*.gcda" -exec gcov {} \;
             cd ../..
-            sonar-scanner -sonar.token=${{secrets.TOKENMARIN}}
+            source ~/.bashrc
+            sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}}
 
           
   clean:
