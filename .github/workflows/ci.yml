@@ -113,15 +113,7 @@ jobs:
             cd ../..
             source ~/.bashrc
            
-            /opt/sonar-scanner/bin/sonar-scanner \
-            -Dsonar.token=${{secrets.TOKENMARIN}} \
-            -Dsonar.pullrequest.key=${{ github.event_name == 'pull_request' && github.event.pull_request.number || '' }} \
-            -Dsonar.pullrequest.branch=${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || 'main' }} \
-            -Dsonar.pullrequest.base=${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || 'main' }} \
-            -Dsonar.pullrequest.provider=github \
-            -Dsonar.pullrequest.github.repository=EPFLRocketTeam/C_AV_SIL \
-            -Dsonar.pullrequest.github.endpoint=https://api.github.com \
-            -Dsonar.pullrequest.github.token.secured=${{secrets.GITHUB_TOKEN}} \
+            /opt/sonar-scanner/bin/sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}} -Dsonar.pullrequest.key=${{ github.event_name == 'pull_request' && github.event.pull_request.number || '' }} -Dsonar.pullrequest.branch=${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || 'main' }} -Dsonar.pullrequest.base=${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || 'main' }} -Dsonar.pullrequest.provider=github -Dsonar.pullrequest.github.repository=EPFLRocketTeam/C_AV_SIL -Dsonar.pullrequest.github.endpoint=https://api.github.com -Dsonar.pullrequest.github.token.secured=${{secrets.GITHUB_TOKEN}}
             
           
   clean:
