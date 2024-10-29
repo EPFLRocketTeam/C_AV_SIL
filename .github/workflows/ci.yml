@@ -160,10 +160,7 @@ jobs:
           ./C_AV_SIL
           
           cd C_AV_SIL/build
-          ls
-          pwd
-          
-          
+          cat compile_commands.json
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
