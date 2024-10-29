@@ -122,8 +122,7 @@ jobs:
             -Dsonar.pullrequest.github.repository=EPFLRocketTeam/C_AV_SIL \
             -Dsonar.pullrequest.github.endpoint=https://api.github.com \
             -Dsonar.pullrequest.github.token.secured=${{secrets.GITHUB_TOKEN}} \
-            -Dsonar.cfamily.cache.enabled=true \
-            -Dsonar.cfamily.cache.path=/tmp/sonar-cfamily
+            
           
   clean:
     needs: coverage
