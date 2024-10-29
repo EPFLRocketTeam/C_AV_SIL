@@ -60,7 +60,7 @@ jobs:
              if [ $? -ne 0 ]; then
               failed=true
             fi
-            cd 2024_C_AV_RPI
+            cd ../2024_C_AV_RPI
             cat ./CMakeLists.txt
           
         
