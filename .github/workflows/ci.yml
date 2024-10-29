@@ -82,7 +82,7 @@ jobs:
     steps:
       - name: Temp
         run: echo temp
-      - name: Bmp test
+      - name: CTest
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SECRET_IP }}
@@ -90,7 +90,7 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: ${{ secrets.SECRET_PORT }}
           script: |
-            cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI/tests
+            cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI/build/tests
             ctest --output-on-failure 
             
 
