@@ -18,9 +18,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -48,17 +45,19 @@ jobs:
               git checkout ${{ github.event.client_payload.branch }}
             else 
             git submodule set-branch --branch main ./2024_C_AV_RPI/
-            git checkout main
             fi
             
 
             cd 2024_C_AV_RPI
             git submodule update --init --recursive --remote
             cd ..
+            #TODO: check where we are building from
+            cat ./CMakeLists.txt
             mkdir build
             cd build
             cmake ..
             make
+            ls
              if [ $? -ne 0 ]; then
               failed=true
             fi
@@ -73,6 +72,8 @@ jobs:
             else
               status="success"
             fi
+
+      
             
   
   tests:
@@ -146,17 +147,11 @@ jobs:
           script: |
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
             find . -name "*.gcda" -exec gcov {} \;
+            cd ../..
+            source ~/.bashrc
+            /opt/sonar-scanner/bin/sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}} -Dsonar.pullrequest.key=${{ github.event.client_payload.pull_request_number }} -Dsonar.pullrequest.branch=${{ github.event.client_payload.branch }} -Dsonar.pullrequest.base=${{ github.event.client_payload.base }} -Dsonar.pullrequest.provider=github -Dsonar.pullrequest.github.repository=EPFLRocketTeam/C_AV_SIL -Dsonar.pullrequest.github.endpoint=https://api.github.com -Dsonar.pullrequest.github.token.secured=${{secrets.GITHUB_TOKEN}} -Dsonar.cfamily.cache.enabled=true -Dsonar.cfamily.cache.path=/tmp/sonar-cfamily
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        with:
-          args: >
-            -Dsonar.projectKey=EPFLRocketTeam_C_AV_SIL
-            -Dsonar.organization=epflrocketteam-1
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-            
-
+          
   clean:
     needs: coverage
     if: ${{ always() }}
