@@ -90,7 +90,7 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: ${{ secrets.SECRET_PORT }}
           script: |
-            cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI/build/tests
+            cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI/tests
             ctest --output-on-failure 
             
 
