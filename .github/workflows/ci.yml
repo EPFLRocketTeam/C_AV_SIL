@@ -149,7 +149,7 @@ jobs:
             find . -name "*.gcda" -exec gcov {} \;
             cd ../..
             source ~/.bashrc
-            sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}}
+            /opt/sonar-scanner/bin/sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}}
 
           
   clean:
