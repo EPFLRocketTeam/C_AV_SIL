@@ -113,10 +113,11 @@ jobs:
             cd ../..
             source ~/.bashrc
             #if pull request key does not exist just scan the main branch
-            if[-n "${{ github.event.client_payload.branch }}"]; then
+            if[-n "${{ github.event.client_payload.branch }}"];then
               /opt/sonar-scanner/bin/sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}} -Dsonar.pullrequest.key=${{ github.event.client_payload.key }} -Dsonar.pullrequest.branch=${{github.event.client_payload.branch}} -Dsonar.pullrequest.base=${{ github.event.client_payload.baseref }} -Dsonar.pullrequest.provider=github -Dsonar.pullrequest.github.repository=EPFLRocketTeam/C_AV_SIL -Dsonar.pullrequest.github.endpoint=https://api.github.com -Dsonar.pullrequest.github.token.secured=${{secrets.GITHUB_TOKEN}}
+            else
+              /opt/sonar-scanner/bin/sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}} -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} -Dsonar.pullrequest.branch=${{  github.event.pull_request.head.ref }} -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} -Dsonar.pullrequest.provider=github -Dsonar.pullrequest.github.repository=EPFLRocketTeam/C_AV_SIL -Dsonar.pullrequest.github.endpoint=https://api.github.com -Dsonar.pullrequest.github.token.secured=${{secrets.GITHUB_TOKEN}}
             fi
-            /opt/sonar-scanner/bin/sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}} -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} -Dsonar.pullrequest.branch=${{  github.event.pull_request.head.ref }} -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} -Dsonar.pullrequest.provider=github -Dsonar.pullrequest.github.repository=EPFLRocketTeam/C_AV_SIL -Dsonar.pullrequest.github.endpoint=https://api.github.com -Dsonar.pullrequest.github.token.secured=${{secrets.GITHUB_TOKEN}}
             
           
   clean:
