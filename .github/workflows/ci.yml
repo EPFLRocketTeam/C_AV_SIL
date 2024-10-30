@@ -87,7 +87,7 @@ jobs:
           script: |
             cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI/tests
             ls
-            ctest --output-on-failure 
+            ctest --output-on-failure -V
             
 
 
