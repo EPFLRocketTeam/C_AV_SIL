@@ -108,7 +108,7 @@ jobs:
             find . -name "*.gcda" -exec gcov {} \;
             lcov --capture --directory . --output-file gcov.info
             pwd
-            cd /../2024_C_AV_RPI
+            cd ../2024_C_AV_RPI
             source ~/.bashrc
             /opt/sonar-scanner/bin/sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}} -Dsonar.sources=src -Dsonar.tests=tests -Dsonar.cfamily.compile-commands=../build/compile_commands.json -Dsonar.host.url=https://sonarcloud.io -Dsonar.scm.provider=git -Dsonar.scm.exclusions.disabled=true -Dsonar.cpp.gcov.reportPaths=../build/gcov.info -Dsonar.projectKey=EPFLRocketTeam_C_AV_SIL -Dsonar.organization=epflrocketteam-1
           
