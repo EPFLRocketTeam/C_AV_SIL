@@ -104,11 +104,12 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: ${{ secrets.SECRET_PORT }}
           script: |
-            cd ./testDir/C_AV_SIL/build/2024_C_AV_RPI
+            cd ./testDir/C_AV_SIL/build
             find . -name "*.gcda" -exec gcov {} \;
-            cd ../../2024_C_AV_RPI
+            lcov --capture --directory . --output-file gcov.info
+            cd /../2024_C_AV_RPI
             source ~/.bashrc
-            /opt/sonar-scanner/bin/sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}} -Dsonar.sources=src -Dsonar.tests=tests -Dsonar.cfamily.compile-commands=../build/compile_commands.json -Dsonar.host.url=https://sonarcloud.io -Dsonar.scm.provider=git -Dsonar.scm.exclusions.disabled=true -Dsonar.cpp.gcov.reportPaths=../build/2024_C_AV_RPI/tests/gcov.info -Dsonar.projectKey=EPFLRocketTeam_C_AV_SIL -Dsonar.organization=epflrocketteam-1
+            /opt/sonar-scanner/bin/sonar-scanner -Dsonar.token=${{secrets.TOKENMARIN}} -Dsonar.sources=src -Dsonar.tests=tests -Dsonar.cfamily.compile-commands=../build/compile_commands.json -Dsonar.host.url=https://sonarcloud.io -Dsonar.scm.provider=git -Dsonar.scm.exclusions.disabled=true -Dsonar.cpp.gcov.reportPaths=../build/gcov.info -Dsonar.projectKey=EPFLRocketTeam_C_AV_SIL -Dsonar.organization=epflrocketteam-1
           
   clean:
     needs: coverage
