@@ -105,8 +105,8 @@ jobs:
           port: ${{ secrets.SECRET_PORT }}
           script: |
             cd ./testDir/C_AV_SIL/build
-            find . -name "*.gcda" -exec gcov {} \;
-            lcov --capture --directory . --output-file gcov.info
+            find . -name "*.gcda" -exec gcov --preserve-paths {} \;
+            #lcov --capture --directory . --output-file gcov.info
             pwd
             cd ../2024_C_AV_RPI
             source ~/.bashrc
